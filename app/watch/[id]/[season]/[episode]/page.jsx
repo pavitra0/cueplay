@@ -10,12 +10,12 @@ export default async function VideoPlayerPage({ params }) {
   const safeSeason = Math.max(1, parseInt(season || "1") || 1);
   const safeEpisode = Math.max(1, parseInt(episode || "1") || 1);
 
-  let shortData, mainData, type;
+  let shortData, mainData, posterData, poster, type;
   let episodesData,
     formatedEpisodes = null;
 
   try {
-    ({ shortData, mainData } = await getMovie(id));
+    ({ shortData, mainData, posterData } = await getMovie(id));
     type = shortData?.["@type"];
 
     if (type === "TVSeries") {
@@ -28,6 +28,9 @@ export default async function VideoPlayerPage({ params }) {
     }
   } catch (error) {
     console.error("Failed to fetch data:", error);
+
+
+  
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#18181c] via-[#23232a] to-black p-6">
@@ -49,6 +52,8 @@ export default async function VideoPlayerPage({ params }) {
     );
   }
 
+    poster = posterData?.description[0]?.backdrops; 
+
 
   const getVideoUrl = () => {
     if (!id) return "";
@@ -62,17 +67,19 @@ export default async function VideoPlayerPage({ params }) {
 
   return (
     <div className="relative min-h-screen w-full  flex flex-col items-center justify-center py-8 px-2">
-      {shortData?.image && (
-        <div className="fixed inset-0 z-[-1]">
-          <img
-            src={shortData.image}
-            alt={shortData.name}
-            className="w-full h-full object-cover  brightness-50"
-            draggable={false}
-          />
-          <div className="absolute inset-0 bg-black/50"  />
-        </div>
-      )}
+{poster && (
+  <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
+    <img
+      src={poster[Math.floor(Math.random() * poster.length)]}
+      alt={shortData.name}
+      className="w-full h-full object-cover blur brightness-100 scale-100 select-none"
+      style={{ transform: "scale(1.1)" }} // Ensures scale even if Tailwind class not present
+      draggable={false}
+      aria-hidden="true"
+    />
+    <div className="absolute inset-0 bg-black/80" />
+  </div>
+)}
 
       {/* Back Button */}
       <div className="absolute top-6 left-6 z-50">

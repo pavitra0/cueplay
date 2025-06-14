@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
-import {FiPlay } from "react-icons/fi"; 
+import { FiPlay } from "react-icons/fi";
 
 export default function EpisodeSelector({
   id,
@@ -50,36 +50,44 @@ export default function EpisodeSelector({
   );
 
   const handleEpisodeClick = (epNumber) => {
-     const targetUrl = `/watch/${id}/${season}/${epNumber}`;
-  if (window.location.pathname === targetUrl) return;
-  router.push(targetUrl);
+    const targetUrl = `/watch/${id}/${season}/${epNumber}`;
+    if (window.location.pathname === targetUrl) return;
+    router.push(targetUrl);
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-6 backdrop-blur-md  border border-white/20 shadow-xl rounded-xl flex flex-col gap-6">
+    <div className="w-full max-w-3xl mx-auto p-6 backdrop-blur-md bg-white/5 border border-white/20 shadow-xl rounded-xl flex flex-col gap-6">
       {/* Top Controls */}
       <div className="flex flex-row justify-between items-center gap-4">
         {/* Season Selector */}
         <select
           value={season}
           onChange={(e) => setSeason(e.target.value)}
-          className="bg-[#222] text-white px-4 py-2 rounded-md text-base outline-none"
+          className="
+    bg-white/10 backdrop-blur-md border border-white/20
+    text-white px-4 py-2 rounded-lg text-base outline-none
+    shadow-inner transition
+    focus:ring-2 focus:ring-white/30
+    appearance-none
+  "
         >
           {validSeasons.map((s) => (
-            <option key={s.season} value={s.season.toString()}>
+            <option key={s.season} value={s.season.toString()} 
+            className="bg-[#222] text-white"
+            >
               Season {s.season}
             </option>
           ))}
         </select>
 
         {/* Search */}
-        <div className="flex flex-row gap-2 items-center w-2/3">
+        <div className="flex flex-row gap-2 items-center w-2/3 absolute right-8 ">
           <input
             type="text"
             placeholder="Search episode..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 bg-[#222] text-white px-2 py-2 rounded-md "
+            className="flex-1 bg-white/10 text-white px-2 py-2 rounded-md"
           />
         </div>
       </div>
@@ -91,7 +99,8 @@ export default function EpisodeSelector({
             onClick={() => handleEpisodeClick(ep.number.toString())}
             aria-label={`Go to Episode ${ep.number}: ${ep.name}`}
             key={ep.number}
-            className="flex flex-row items-center bg-[#232323] cursor-pointer rounded-lg p-4 gap-4 shadow-sm hover:bg-[#2a2a2a] transition"
+            className="flex flex-row items-center bg-white/10 backdrop-blur-md cursor-pointer 
+  rounded-lg p-4 gap-4 shadow-sm hover:bg-white/10 transition"
           >
             {/* Episode Image with overlay */}
             <div className="relative w-28 h-20 flex-shrink-0 rounded-md overflow-hidden bg-black/40">

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
-import { FiDownload, FiPlay } from "react-icons/fi"; // For download and play icons
+import {FiPlay } from "react-icons/fi"; 
 
 export default function EpisodeSelector({
   id,
@@ -50,7 +50,9 @@ export default function EpisodeSelector({
   );
 
   const handleEpisodeClick = (epNumber) => {
-    router.push(`watch/${id}/${season}/${epNumber}`);
+     const targetUrl = `/watch/${id}/${season}/${epNumber}`;
+  if (window.location.pathname === targetUrl) return;
+  router.push(targetUrl);
   };
 
   return (

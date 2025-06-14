@@ -56,8 +56,6 @@ export default function MovieSearch() {
     setLoadingCardId(imdbId);
   };
 
-  console.log(results)
-
   return (
     <div className="relative z-10 px-4 py-10 min-h-screen">
       <div className="max-w-5xl mx-auto space-y-8">

@@ -53,9 +53,9 @@ export default async function VideoPlayerPage({ params }) {
   const getVideoUrl = () => {
     if (!id) return "";
     if (type === "Movie") {
-      return `https://vidora.su/movie/${id}?autoplay=true`;
+      return `https://vidora.su/movie/${id}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
     } else if (type === "TVSeries") {
-      return `https://vidora.su/tv/${id}/${safeSeason}/${safeEpisode}`;
+      return `https://vidora.su/tv/${id}/${safeSeason}/${safeEpisode}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
     }
     return "";
   };
@@ -84,7 +84,7 @@ export default async function VideoPlayerPage({ params }) {
       </div>
 
       {/* Video Player */}
-      <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-20 border-white/20 shadow-2xl bg-black/80 mb-8">
+      <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-14 border-white/20 shadow-2xl bg-black/80 mb-8">
         <iframe
           src={getVideoUrl()}
           allowFullScreen

@@ -1,9 +1,10 @@
 import { getMovie } from "@/actions/getMovies";
+import { fetchTMDBData } from "@/actions/playerFetch";
 import { BackButton } from "@/components/BackButton";
 import EpisodeSelector from "@/components/EpisodeSelector";
 import organizeEpisodes from "@/lib/episodesFunction";
 import { getEpisodes } from "@/lib/tvMaze";
-import { MoveLeft, MoveLeftIcon } from "lucide-react";
+import {  MoveLeft, MoveLeftIcon } from "lucide-react";
 
 export default async function VideoPlayerPage({ params }) {
   const { id, season, episode } = await params;
@@ -53,13 +54,25 @@ export default async function VideoPlayerPage({ params }) {
     );
   }
 
-    poster = posterData?.description[0]?.backdrops; 
+    poster = posterData?.description[0]?.backdrops;
+    console.log(shortData) 
+    const playerId = await fetchTMDBData(shortData.alternateName || shortData.name)
+    console.log(playerId)
+ 
 
-
+  // const getVideoUrl = () => {
+  //   if (!id) return "";
+  //   if (type === "Movie") {
+  //     return `https://vidora.su/movie/${id}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
+  //   } else if (type === "TVSeries") {
+  //     return `https://vidora.su/tv/${id}/${safeSeason}/${safeEpisode}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
+  //   }
+  //   return "";
+  // };
   const getVideoUrl = () => {
     if (!id) return "";
     if (type === "Movie") {
-      return `https://vidora.su/movie/${id}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
+      return `https://player.videasy.net/movie/${id}`;
     } else if (type === "TVSeries") {
       return `https://vidora.su/tv/${id}/${safeSeason}/${safeEpisode}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
     }

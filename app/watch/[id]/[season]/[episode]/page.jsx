@@ -104,14 +104,14 @@ export default async function VideoPlayerPage({ params }) {
       </div>
 
       {/* Video Player */}
-      <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-14 border-white/20 shadow-2xl bg-black/80 mb-8">
-        {/* <iframe
+      {/* <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-14 border-white/20 shadow-2xl bg-black/80 mb-8">
+        <iframe
           src={getVideoUrl()}
           allowFullScreen
           className="w-full h-full"
           title="Video Player"
-        /> */}
-      </div>
+        />
+      </div> */}
 
       {/* Episode Selector */}
       {type === "TVSeries" && formatedEpisodes && (

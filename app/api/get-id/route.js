@@ -1,6 +1,6 @@
 export const config = {
   runtime: "nodejs",
-  regions: ["iad1"], // US East (to bypass TMDB block in India)
+  regions: ["iad1"], // US East region to avoid TMDB block in India
 };
 
 export async function GET(request) {
@@ -28,14 +28,12 @@ export async function GET(request) {
 
     const data = await res.json();
 
-    if (!data.results || data.results.length === 0) {
-      return new Response(JSON.stringify({ results: [] }), { status: 404 });
-    }
-
+    // ✅ Return full results array
     return new Response(JSON.stringify({ results: data.results }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
+
   } catch (error) {
     console.error("Fetch failed:", error);
     return new Response(JSON.stringify({ error: "Failed to fetch from TMDB" }), {

@@ -59,15 +59,15 @@ export default async function VideoPlayerPage({ params }) {
 
   console.log("playerId", playerId);
 
-  const getVideoUrl = () => {
-    if (!id) return "";
-    if (type === "Movie") {
-      return `https://vidora.su/movie/${id}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
-    } else if (type === "TVSeries") {
-      return `https://vidora.su/tv/${id}/${safeSeason}/${safeEpisode}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
-    }
-    return "";
-  };
+  // const getVideoUrl = () => {
+  //   if (!id) return "";
+  //   if (type === "Movie") {
+  //     return `https://vidora.su/movie/${id}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
+  //   } else if (type === "TVSeries") {
+  //     return `https://vidora.su/tv/${id}/${safeSeason}/${safeEpisode}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
+  //   }
+  //   return "";
+  // };
   // const getVideoUrl = () => {
   //   if (!id) return "";
   //   if (type === "Movie") {

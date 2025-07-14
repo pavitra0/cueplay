@@ -56,8 +56,8 @@ export default async function VideoPlayerPage({ params }) {
 
     poster = posterData?.description[0]?.backdrops;
     console.log(shortData) 
-    const playerId = await fetchTMDBData(shortData.alternateName )
-    console.log(playerId)
+    const playerId = await fetchTMDBData(shortData.alternateName || shortData.name )
+    console.log("playerId",playerId)
  
 
   const getVideoUrl = () => {

@@ -4,7 +4,7 @@ import { BackButton } from "@/components/BackButton";
 import EpisodeSelector from "@/components/EpisodeSelector";
 import organizeEpisodes from "@/lib/episodesFunction";
 import { getEpisodes } from "@/lib/tvMaze";
-import {  MoveLeft, MoveLeftIcon } from "lucide-react";
+import { MoveLeft, MoveLeftIcon } from "lucide-react";
 
 export default async function VideoPlayerPage({ params }) {
   const { id, season, episode } = await params;
@@ -18,7 +18,7 @@ export default async function VideoPlayerPage({ params }) {
   try {
     ({ shortData, mainData, posterData } = await getMovie(id));
     type = shortData?.["@type"];
-    console.log("short",shortData,"main",mainData)
+    console.log("short", shortData, "main", mainData);
 
     if (type === "TVSeries") {
       episodesData = await getEpisodes(
@@ -30,9 +30,6 @@ export default async function VideoPlayerPage({ params }) {
     }
   } catch (error) {
     console.error("Failed to fetch data:", error);
-
-
-  
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#18181c] via-[#23232a] to-black p-6">
@@ -54,11 +51,13 @@ export default async function VideoPlayerPage({ params }) {
     );
   }
 
-    poster = posterData?.description[0]?.backdrops;
-    console.log(shortData) 
-    const {results} = await fetchTMDBData(shortData.alternateName || shortData.name )
-    console.log("playerId",results)
- 
+  poster = posterData?.description[0]?.backdrops;
+  const results = await fetchTMDBData(
+    shortData.alternateName || shortData.name
+  );
+  const playerId = results[0]?.id || null; // Safely get first result's ID
+
+  console.log("playerId", playerId);
 
   const getVideoUrl = () => {
     if (!id) return "";
@@ -81,19 +80,19 @@ export default async function VideoPlayerPage({ params }) {
 
   return (
     <div className="relative min-h-screen w-full  flex flex-col items-center justify-center py-8 px-2">
-{poster && (
-  <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
-    <img
-      src={poster[Math.floor(Math.random() * poster.length)]}
-      alt={shortData.name}
-      className="w-full h-full object-cover blur brightness-100 scale-100 select-none"
-      style={{ transform: "scale(1.1)" }} // Ensures scale even if Tailwind class not present
-      draggable={false}
-      aria-hidden="true"
-    />
-    <div className="absolute inset-0 bg-black/80" />
-  </div>
-)}
+      {poster && (
+        <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
+          <img
+            src={poster[Math.floor(Math.random() * poster.length)]}
+            alt={shortData.name}
+            className="w-full h-full object-cover blur brightness-100 scale-100 select-none"
+            style={{ transform: "scale(1.1)" }} // Ensures scale even if Tailwind class not present
+            draggable={false}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-black/80" />
+        </div>
+      )}
 
       {/* Back Button */}
       <div className="absolute top-6 left-6 z-50">

@@ -11,9 +11,9 @@ export async function fetchTMDBData(query) {
 
     console.log(data)
     // If you're expecting results array
-    if (data && Array.isArray(data)) {
+    // if (data && Array.isArray(data)) {
       return data // Return full list of search results
-    }
+    // }
 
     // Fallback
     return [];
@@ -22,3 +22,5 @@ export async function fetchTMDBData(query) {
     return [];
   }
 }
+
+fetchTMDBData('superman')

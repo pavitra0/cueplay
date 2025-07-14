@@ -105,12 +105,12 @@ export default async function VideoPlayerPage({ params }) {
 
       {/* Video Player */}
       <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-14 border-white/20 shadow-2xl bg-black/80 mb-8">
-        <iframe
+        {/* <iframe
           src={getVideoUrl()}
           allowFullScreen
           className="w-full h-full"
           title="Video Player"
-        />
+        /> */}
       </div>
 
       {/* Episode Selector */}

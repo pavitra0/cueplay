@@ -1,0 +1,44 @@
+// app/api/get-id/route.js
+
+export const runtime = "nodejs";
+export const preferredRegion = "iad1"; 
+
+
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const query = searchParams.get("query");
+
+  if (!query) {
+    return new Response(JSON.stringify({ error: "Query is required" }), { status: 400 });
+  }
+
+  const apiKey = process.env.TMDB_API_KEY;
+  const url = `https://api.themoviedb.org/3/search/tv?query=${encodeURIComponent(query)}&api_key=${apiKey}`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("TMDB Error:", res.status, errorText);
+      return new Response(JSON.stringify({ error: `TMDB error: ${res.status}` }), {
+        status: res.status,
+      });
+    }
+
+    const data = await res.json();
+
+    if (!data.results || data.results.length === 0) {
+      return new Response(JSON.stringify({ id: null }), { status: 404 });
+    }
+
+    return new Response(JSON.stringify({ id: data.results[0].id }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch TMDB ID" }), {
+      status: 500,
+    });
+  }
+}

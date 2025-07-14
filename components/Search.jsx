@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, CardTitle } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import Image from "next/image";
-import { searchMovies } from "../actions/searchMovies";
+import { searchMovies, searchMoviesTmdb } from "../actions/searchMovies";
 import Link from "next/link";
 import Loader from "./Loader";
 
@@ -45,6 +45,7 @@ export default function MovieSearch() {
     try {
       const movies = await searchMovies(searchTerm);
       setResults(movies.description || []);
+       await searchMoviesTmdb(searchTerm)
     } catch (err) {
       console.error(err);
     } finally {
@@ -55,6 +56,7 @@ export default function MovieSearch() {
   const handleCardClick = (imdbId) => {
     setLoadingCardId(imdbId);
   };
+  
 
   return (
     <div className="relative z-10 px-4 py-10 min-h-screen">

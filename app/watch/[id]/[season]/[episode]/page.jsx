@@ -17,6 +17,7 @@ export default async function VideoPlayerPage({ params }) {
   try {
     ({ shortData, mainData, posterData } = await getMovie(id));
     type = shortData?.["@type"];
+    console.log("short",shortData,"main",mainData)
 
     if (type === "TVSeries") {
       episodesData = await getEpisodes(

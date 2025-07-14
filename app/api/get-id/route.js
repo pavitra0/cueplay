@@ -1,8 +1,7 @@
-// app/api/get-id/route.js
-
-export const runtime = "nodejs";
-export const preferredRegion = "iad1"; 
-
+export const config = {
+  runtime: "nodejs",
+  regions: ["iad1"], // US East (to bypass TMDB block in India)
+};
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);

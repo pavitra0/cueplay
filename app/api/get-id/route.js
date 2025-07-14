@@ -8,7 +8,9 @@ export async function GET(request) {
   const query = searchParams.get("query");
 
   if (!query) {
-    return new Response(JSON.stringify({ error: "Query is required" }), { status: 400 });
+    return new Response(JSON.stringify({ error: "Query is required" }), {
+      status: 400,
+    });
   }
 
   const apiKey = process.env.TMDB_API_KEY;
@@ -27,16 +29,16 @@ export async function GET(request) {
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
-      return new Response(JSON.stringify({ id: null }), { status: 404 });
+      return new Response(JSON.stringify({ results: [] }), { status: 404 });
     }
 
-    return new Response(JSON.stringify({ id: data.results[0].id }), {
+    return new Response(JSON.stringify({ results: data.results }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Fetch failed:", error);
-    return new Response(JSON.stringify({ error: "Failed to fetch TMDB ID" }), {
+    return new Response(JSON.stringify({ error: "Failed to fetch from TMDB" }), {
       status: 500,
     });
   }

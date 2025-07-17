@@ -18,7 +18,6 @@ export default async function VideoPlayerPage({ params }) {
   try {
     ({ shortData, mainData, posterData } = await getMovie(id));
     type = shortData?.["@type"];
-    console.log("short", shortData, "main", mainData);
 
     if (type === "TVSeries") {
       episodesData = await getEpisodes(
@@ -52,12 +51,12 @@ export default async function VideoPlayerPage({ params }) {
   }
 
   poster = posterData?.description[0]?.backdrops;
-  const results = await fetchTMDBData(
-    shortData.alternateName || shortData.name
-  );
-  const playerId = results[0]?.id || null; // Safely get first result's ID
+  const tmdbResults = await fetchTMDBData(shortData.alternateName || shortData.name);
+console.log(tmdbResults)
+console.log(shortData,shortData.alternateName , shortData.name)
 
-  console.log("playerId", playerId);
+
+   const tmdbId = (tmdbResults[0]?.id)
 
   // const getVideoUrl = () => {
   //   if (!id) return "";
@@ -68,15 +67,19 @@ export default async function VideoPlayerPage({ params }) {
   //   }
   //   return "";
   // };
-  // const getVideoUrl = () => {
-  //   if (!id) return "";
-  //   if (type === "Movie") {
-  //     return `https://player.videasy.net/movie/${id}`;
-  //   } else if (type === "TVSeries") {
-  //     return `https://vidora.su/tv/${id}/${safeSeason}/${safeEpisode}?colour=ff384c&autoplay=true&autonextepisode=true&backbutton=https%3A%2F%2Fcueplay.vercel.app%2F&pausescreen=true`;
-  //   }
-  //   return "";
-  // };
+  const getVideoUrl = () => {
+    if (!id) return "";
+    if (type === "Movie") {
+      return `https://player.vidpro.top/embed/movie/${tmdbId}`;
+    } else if (type === "TVSeries") {
+      return `https://player.vidpro.top/embed/tv/${tmdbId}/${safeSeason}/${safeEpisode}`;
+    }
+    return "";
+  };
+
+ 
+  console.log(getVideoUrl())
+
 
   return (
     <div className="relative min-h-screen w-full  flex flex-col items-center justify-center py-8 px-2">
@@ -104,14 +107,14 @@ export default async function VideoPlayerPage({ params }) {
       </div>
 
       {/* Video Player */}
-      {/* <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-14 border-white/20 shadow-2xl bg-black/80 mb-8">
+      <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-14 border-white/20 shadow-2xl bg-black/80 mb-8">
         <iframe
           src={getVideoUrl()}
           allowFullScreen
           className="w-full h-full"
           title="Video Player"
         />
-      </div> */}
+      </div>
 
       {/* Episode Selector */}
       {type === "TVSeries" && formatedEpisodes && (

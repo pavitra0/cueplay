@@ -1,6 +1,11 @@
 export async function fetchTMDBData(query) {
   try {
-    const res = await fetch(`/api/get-id?query=${encodeURIComponent(query)}`);
+    const isServer = typeof window === 'undefined';
+    const baseUrl = isServer
+      ? process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+      : '';
+
+    const res = await fetch(`${baseUrl}/api/get-id?query=${encodeURIComponent(query)}`);
 
     if (!res.ok) {
       const error = await res.json();
@@ -9,12 +14,10 @@ export async function fetchTMDBData(query) {
 
     const data = await res.json();
 
-    // If you're expecting results array
     if (data.results && Array.isArray(data.results)) {
-      return data.results; // Return full list of search results
+      return data.results;
     }
 
-    // Fallback
     return [];
   } catch (error) {
     console.error('Error fetching TMDB data:', error.message);

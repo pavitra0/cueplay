@@ -14,7 +14,7 @@ export async function GET(request) {
   }
 
   const apiKey = process.env.TMDB_API_KEY;
-  const url = `https://api.themoviedb.org/3/search/tv?query=${encodeURIComponent(query)}&api_key=${apiKey}`;
+  const url = `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&api_key=${apiKey}`;
 
   try {
     const res = await fetch(url);

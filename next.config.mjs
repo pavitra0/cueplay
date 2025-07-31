@@ -10,9 +10,14 @@ const nextConfig = {
      },{ 
       protocol:'https',
       hostname:"static.tvmaze.com",
-     },{
+     },
+     {
       protocol:'https',
       hostname:'images.justwatch.com'
+     },
+     {
+      protocol:'https',
+      hostname:'image.tmdb.org'
      }
     ],
   },

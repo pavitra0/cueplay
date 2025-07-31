@@ -1,6 +1,7 @@
 import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import BottomNav from "@/components/BottomNav";
 
 const josefin = Josefin_Sans({ subsets: ["latin"], display: "swap" });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
       >
       <ErrorBoundary>
    {children}
+
       </ErrorBoundary>
       </body>
     

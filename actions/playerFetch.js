@@ -5,7 +5,7 @@ export async function fetchTMDBData(query) {
     //   ? process.env.NEXT_PUBLIC_SITE_URL || 'https://cueplay.vercel.app'
     //   : '';
 
-    const res = await fetch(`https://localhost:3000/api/search?query=${encodeURIComponent(query)}`);
+    const res = await fetch(`https://cueplay.vercel.app/api/search?query=${encodeURIComponent(query)}`);
 
     if (!res.ok) {
       const error = await res.json();

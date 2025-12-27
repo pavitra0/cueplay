@@ -16,7 +16,7 @@ export default async function MoviePage({ params }) {
 let season = 1
 let episode = 1
 
-  const { shortData, mainData, posterData } = await getMovie(params.id);
+  const { shortData, mainData, posterData } = await getMovie(params?.id);
 
   const poster = posterData.description[0]?.backdrops;
 

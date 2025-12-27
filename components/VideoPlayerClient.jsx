@@ -34,13 +34,20 @@ export default function VideoPlayerClient({
       })();
     }
   }, [id, shortData]);
+ 
 
   const getVideoUrl = () => {
-    if (!id || !tmdbId) return "";
     return type === "Movie"
-      ? `https://111movies.com/movie/${tmdbId}`
-      : `https://111movies.com/tv/${tmdbId}/${season}/${episode}`;
+      ? `https://111movies.com/movie/${id}`
+      : `https://111movies.com/tv/${id}/${season}/${episode}`;
   };
+
+  // previous ver 
+  // const getVideoUrl = () => {
+  //   return type === "Movie"
+  //     ? `https://111movies.com/movie/${tmdbId}`
+  //     : `https://111movies.com/tv/${tmdbId}/${season}/${episode}`;
+  // };
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center py-8 px-2">
@@ -68,7 +75,7 @@ export default function VideoPlayerClient({
       </div>
 
       {/* Video Player */}
-      {tmdbId && (
+      {id && (
         <div className="w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 mt-14 border-white/20 shadow-2xl bg-black/80 mb-8">
           <iframe
             src={getVideoUrl()}

@@ -2,70 +2,54 @@
 
 export async function getMovie(id) {
   if (!id || typeof id !== "string" || !id.trim()) {
-    throw new Error("Movie ID is required");
+    return { error: "Movie ID is required" };
   }
 
-  // Fetch movie details
-  let res;
   try {
-    res = await fetch(
+    // Fetch movie details
+    const res = await fetch(
       `https://imdb.iamidiotareyoutoo.com/search?tt=${encodeURIComponent(id)}`,
       {
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
         cache: "no-store",
       }
     );
-  } catch (err) {
-    throw new Error("Network error while fetching movie details");
-  }
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch movie details: ${res.status} ${res.statusText}`);
-  }
+    if (!res.ok) {
+      return { error: `Failed to fetch movie details: ${res.status} ${res.statusText}` };
+    }
 
-  let data;
-  try {
-    data = await res.json();
-  } catch (err) {
-    throw new Error("Invalid JSON response from movie details");
-  }
+    const data = await res.json().catch(() => null);
+    if (!data) {
+      return { error: "Invalid JSON response from movie details" };
+    }
 
-  const shortData = data.short;
-  const mainData = data.main;
+    const shortData = data.short;
+    const mainData = data.main;
 
-  // Defensive: If no movie found, return early
-  if (!shortData?.name) {
-    return { shortData: null, mainData: null, posterData: null };
-  }
+    if (!shortData?.name) {
+      return { shortData: null, mainData: null, posterData: null };
+    }
 
-  // Fetch poster data using the movie's name
-  let posterResponse;
-  try {
-    posterResponse = await fetch(
+    // Fetch poster data
+    const posterResponse = await fetch(
       `https://imdb.iamidiotareyoutoo.com/justwatch?q=${encodeURIComponent(shortData.name)}`,
       {
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
         cache: "no-store",
       }
     );
+
+    if (!posterResponse.ok) {
+      return { shortData, mainData, posterData: null, error: "Poster fetch failed" };
+    }
+
+    const posterData = await posterResponse.json().catch(() => null);
+
+    return { shortData, mainData, posterData };
+
   } catch (err) {
-    throw new Error("Network error while fetching poster");
+    // Catch network or unexpected errors
+    return { error: `Network error: ${err.message}`, shortData: null, mainData: null, posterData: null };
   }
-
-  if (!posterResponse.ok) {
-    throw new Error(`Failed to fetch poster: ${posterResponse.status} ${posterResponse.statusText}`);
-  }
-
-  let posterData;
-  try {
-    posterData = await posterResponse.json();
-  } catch (err) {
-    throw new Error("Invalid JSON response from poster fetch");
-  }
-
-  return { shortData, mainData, posterData };
 }

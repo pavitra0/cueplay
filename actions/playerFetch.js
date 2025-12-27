@@ -13,6 +13,7 @@ export async function fetchTMDBData(query) {
     }
 
     const data = await res.json();
+    console.log(data)
 
     if (data.results && Array.isArray(data.results)) {
       return data.results;

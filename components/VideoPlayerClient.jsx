@@ -38,8 +38,8 @@ export default function VideoPlayerClient({
   const getVideoUrl = () => {
     if (!id || !tmdbId) return "";
     return type === "Movie"
-      ? `https://player.vidpro.top/embed/movie/${tmdbId}`
-      : `https://player.vidpro.top/embed/tv/${tmdbId}/${season}/${episode}`;
+      ? `https://111movies.com/movie/${tmdbId}`
+      : `https://111movies.com/tv/${tmdbId}/${season}/${episode}`;
   };
 
   return (
